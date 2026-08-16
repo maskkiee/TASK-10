@@ -1,4 +1,6 @@
-package ffWork;
+package ffWork.Repo;
+
+import ffWork.Domain.User;
 
 import java.util.List;
 import java.util.Optional;

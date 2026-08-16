@@ -1,4 +1,4 @@
-package ffWork;
+package ffWork.Domain;
 
 public class CompanyUser extends User {
     private final String companyName;
@@ -21,6 +21,6 @@ public class CompanyUser extends User {
 
     @Override
     public String toString() {
-        return companyName + " <" + getEmail() + "> [NIP: " + taxId + "]";
+        return "email: " + getEmail() + " companyName: " + companyName + " [NIP: " + taxId + "]";
     }
 }

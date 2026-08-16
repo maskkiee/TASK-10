@@ -1,4 +1,4 @@
-package ffWork;
+package ffWork.CLI;
 
 public class App {
 }

@@ -1,7 +1,9 @@
-package ffWork;
+package ffWork.Domain;
+
+import ffWork.Money.Money;
+import ffWork.Payment.Payment;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Booking {

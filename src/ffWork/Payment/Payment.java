@@ -1,4 +1,6 @@
-package ffWork;
+package ffWork.Payment;
+
+import ffWork.Money.Money;
 
 public abstract class Payment {
     private final Money amount;

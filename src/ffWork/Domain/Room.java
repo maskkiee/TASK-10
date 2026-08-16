@@ -1,4 +1,6 @@
-package ffWork;
+package ffWork.Domain;
+
+import ffWork.Money.Money;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -15,7 +17,7 @@ public class Room extends Resource {
         return equipment;
     }
 
-    public Room(String name, Money customHourlyRate, int seats, Set<String> equipment) {
+    public Room(String name, int seats, Set<String> equipment, Money customHourlyRate) {
         super(name, customHourlyRate);
         this.seats = seats;
         this.equipment = equipment;

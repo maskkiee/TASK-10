@@ -1,4 +1,7 @@
-package ffWork;
+package ffWork.Payment;
+
+import ffWork.Domain.User;
+import ffWork.Money.Money;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package ffWork;
+package ffWork.Money;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,7 +21,7 @@ public class Money {
         this.amount = amount.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public Money of(String amount) {
+    public static Money of(String amount) {
         if (amount == null) {
             throw new IllegalArgumentException("amount cannot be null");
         }
@@ -31,7 +31,7 @@ public class Money {
         return new Money(new BigDecimal(amount));
     }
 
-    public Money of(double amount) {
+    public static Money of(double amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("amount cannot be negative");
         }

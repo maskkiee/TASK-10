@@ -1,4 +1,6 @@
-package ffWork;
+package ffWork.Domain;
+
+import ffWork.Money.Money;
 
 import java.math.BigDecimal;
 

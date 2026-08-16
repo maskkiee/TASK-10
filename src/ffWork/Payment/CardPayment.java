@@ -1,9 +1,14 @@
-package ffWork;
+package ffWork.Payment;
+
+import ffWork.Money.Money;
 
 public class CardPayment extends Payment {
     private final String last4;
+    public String getLast4() {
+        return last4;
+    }
 
-    protected CardPayment(Money amount, String paymentId, String last4) {
+    public CardPayment(Money amount, String paymentId, String last4) {
         super(amount, paymentId);
         this.last4 = last4;
     }

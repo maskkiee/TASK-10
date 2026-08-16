@@ -1,4 +1,6 @@
-package ffWork;
+package ffWork.Domain;
+
+import ffWork.Money.Money;
 
 public abstract class Resource {
     private final String name;

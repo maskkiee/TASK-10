@@ -1,4 +1,4 @@
-package ffWork;
+package ffWork.Domain;
 
 public enum BookingStatus {
     PENDING,
