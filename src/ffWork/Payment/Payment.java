@@ -7,6 +7,12 @@ public abstract class Payment {
     private final String paymentId;
     private PaymentStatus status;
 
+    protected Payment(Money amount, String paymentId) {
+        this.amount = amount;
+        this.paymentId = paymentId;
+        this.status = PaymentStatus.INITIATED;
+    }
+
     public Money getAmount() {
         return amount;
     }
@@ -23,12 +29,5 @@ public abstract class Payment {
         this.status = status;
     }
 
-    protected Payment(Money amount, String paymentId) {
-        this.amount = amount;
-        this.paymentId = paymentId;
-        this.status = PaymentStatus.INITIATED;
-    }
-
     public abstract void capture();
-
 }

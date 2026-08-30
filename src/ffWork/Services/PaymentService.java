@@ -1,4 +1,4 @@
-package ffWork.Service;
+package ffWork.Services;
 
 import ffWork.Domain.Booking;
 import ffWork.Domain.BookingStatus;
@@ -17,7 +17,6 @@ public class PaymentService {
 
     public Payment pay(String bookingId, String cardLast4) {
         Booking booking = bookingRepo.findById(bookingId).orElseThrow(() -> new IllegalArgumentException("Booking not found"));
-
         if (booking.getStatus() != BookingStatus.CONFIRMED) {
             throw new IllegalArgumentException("Booking must be confirmed");
         }
@@ -28,5 +27,4 @@ public class PaymentService {
         booking.setPayment(payment);
         return payment;
     }
-
 }

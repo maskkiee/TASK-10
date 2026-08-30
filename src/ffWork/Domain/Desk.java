@@ -1,17 +1,10 @@
 package ffWork.Domain;
 
 import ffWork.Money.Money;
-
 import java.math.BigDecimal;
 
 public class Desk extends Resource {
-    public enum DeskType {HOT, FIXED}
-
     private final DeskType type;
-
-    public DeskType getType() {
-        return type;
-    }
 
     public Desk(String name, Money customHourlyRate, DeskType type) {
         super(name, customHourlyRate);
@@ -21,6 +14,10 @@ public class Desk extends Resource {
     public Desk(String name, DeskType type, double hourlyRate) {
         super(name, new Money(BigDecimal.valueOf(hourlyRate)));
         this.type = type;
+    }
+
+    public DeskType getType() {
+        return type;
     }
 
     @Override

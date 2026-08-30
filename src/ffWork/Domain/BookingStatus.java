@@ -5,6 +5,7 @@ public enum BookingStatus {
     CONFIRMED,
     CANCELLED,
     COMPLETED;
+
     public boolean canTransitionTo(BookingStatus next) {
         return switch (this) {
             case PENDING -> next == CONFIRMED || next == CANCELLED;

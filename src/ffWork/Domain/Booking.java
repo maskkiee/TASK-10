@@ -15,6 +15,18 @@ public class Booking {
     private BookingStatus status;
     private Money calculatedPrice;
     private Payment payment;
+    
+    public Booking(String id, User user, Resource resource, LocalDateTime start, LocalDateTime end) {
+        if (end.isBefore(start)) {
+            throw new IllegalArgumentException("end is before start time");
+        }
+        this.id = id;
+        this.user = user;
+        this.resource = resource;
+        this.start = start;
+        this.end = end;
+        this.status = BookingStatus.PENDING;
+    }
 
     public Payment getPayment() {
         return payment;
@@ -65,19 +77,6 @@ public class Booking {
             throw new IllegalStateException("Cannot transition status to " + next);
         }
         this.status = next;
-    }
-
-
-    public Booking(String id, User user, Resource resource, LocalDateTime start, LocalDateTime end) {
-        if (end.isBefore(start)) {
-            throw new IllegalArgumentException("end is before start time");
-        }
-        this.id = id;
-        this.user = user;
-        this.resource = resource;
-        this.start = start;
-        this.end = end;
-        this.status = BookingStatus.PENDING;
     }
 
     public int durationMinutes() {

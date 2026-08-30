@@ -14,10 +14,10 @@ public abstract class Resource {
     public String getName() {
         return name;
     }
+
     public Money getCustomHourlyRate() {
         return customHourlyRate;
     }
-
 
     protected abstract Money baseRatePerHour();
 

@@ -23,9 +23,6 @@ public enum MenuOptions {
         this.number = number;
     }
 
-    public String getDescription() { return description; }
-    public int getNumber() { return number; }
-
     public static MenuOptions fromNumber(int number) {
         for (MenuOptions o : values()) {
             if (o.number == number) {
@@ -33,6 +30,14 @@ public enum MenuOptions {
             }
         }
         return null;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public static void printMenu() {

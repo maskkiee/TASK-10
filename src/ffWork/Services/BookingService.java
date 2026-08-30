@@ -1,11 +1,10 @@
-package ffWork.Service;
+package ffWork.Services;
 
 import ffWork.Domain.*;
 import ffWork.Pricing.PricingPolicy;
 import ffWork.Repo.BookingRepository;
 import ffWork.Repo.ResourceRepository;
 import ffWork.Repo.UserRepository;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,7 +15,6 @@ public class BookingService {
     private final BookingRepository bookingRepo;
     private PricingPolicy pricingPolicy;
     private int counter = 0;
-
 
     public PricingPolicy getPricingPolicy() {
         return pricingPolicy;

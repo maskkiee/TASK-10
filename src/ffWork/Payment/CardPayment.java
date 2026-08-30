@@ -3,11 +3,11 @@ package ffWork.Payment;
 import ffWork.Money.Money;
 
 public class CardPayment extends Payment {
-    private final String last4;
+    private final String cardLast4;
 
-    public CardPayment(Money amount, String paymentId, String last4) {
+    public CardPayment(Money amount, String paymentId, String cardLast4) {
         super(amount, paymentId);
-        this.last4 = last4;
+        this.cardLast4 = cardLast4;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class CardPayment extends Payment {
 
     @Override
     public String toString() {
-        return "Card Payment amount: " + getAmount() + ", last4: " + last4 + ", status: " + getStatus();
+        return "Card Payment amount: " + getAmount() + ", cardLast4: " + cardLast4 + ", status: " + getStatus();
     }
 }

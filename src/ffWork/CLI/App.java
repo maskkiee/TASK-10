@@ -8,28 +8,30 @@ import ffWork.Pricing.StandardPricing;
 import ffWork.Repo.InMemoryBookingRepository;
 import ffWork.Repo.InMemoryResourceRepository;
 import ffWork.Repo.InMemoryUserRepository;
-import ffWork.Service.BillingService;
-import ffWork.Service.BookingService;
-import ffWork.Service.PaymentService;
+import ffWork.Services.BillingService;
+import ffWork.Services.BookingService;
+import ffWork.Services.PaymentService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+import ffWork.Domain.DeskType;
+
 public class App {
-    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    private static final DateTimeFormatter Format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final Scanner scanner = new Scanner(System.in);
-    private final InMemoryBookingRepository bookRepo = new InMemoryBookingRepository();
-    private final InMemoryResourceRepository resRepo = new InMemoryResourceRepository();
-    private final InMemoryUserRepository userRepo = new InMemoryUserRepository();
+    private final InMemoryBookingRepository bookingRepository = new InMemoryBookingRepository();
+    private final InMemoryResourceRepository resourceRepository = new InMemoryResourceRepository();
+    private final InMemoryUserRepository userRepository = new InMemoryUserRepository();
     private final BookingService bookingService;
     private final PaymentService paymentService;
     private final BillingService billingService;
 
     public App() {
-        this.bookingService = new BookingService(userRepo, resRepo, bookRepo, new StandardPricing());
-        this.paymentService = new PaymentService(bookRepo);
-        this.billingService = new BillingService(bookRepo);
+        this.bookingService = new BookingService(userRepository, resourceRepository, bookingRepository, new StandardPricing());
+        this.paymentService = new PaymentService(bookingRepository);
+        this.billingService = new BillingService(bookingRepository);
     }
 
     public void run() {
@@ -84,11 +86,11 @@ public class App {
         String displayName = scanner.nextLine().trim();
         if (type.equals("individual")) {
             System.out.print("Student ID (or empty): ");
-            String sID = scanner.nextLine().trim();
-            if (sID.isEmpty()) {
-                userRepo.add(new IndividualUser(email, displayName));
+            String studentID = scanner.nextLine().trim();
+            if (studentID.isEmpty()) {
+                userRepository.add(new IndividualUser(email, displayName));
             } else {
-                userRepo.add(new IndividualUser(email, displayName, Integer.parseInt(sID)));
+                userRepository.add(new IndividualUser(email, displayName, Integer.parseInt(studentID)));
             }
         }
         if (type.equals("company")) {
@@ -96,7 +98,7 @@ public class App {
             String companyName = scanner.nextLine().trim();
             System.out.print("Tax ID: ");
             String taxID = scanner.nextLine().trim();
-            userRepo.add(new CompanyUser(email, displayName, companyName, taxID));
+            userRepository.add(new CompanyUser(email, displayName, companyName, taxID));
         }
         System.out.println("USER ADDED");
     }
@@ -112,17 +114,17 @@ public class App {
             case "ROOM" -> {
                 System.out.print("Seats: ");
                 int seats = Integer.parseInt(scanner.nextLine().trim());
-                resRepo.add(new Room(name, seats, rate));
+                resourceRepository.add(new Room(name, seats, rate));
             }
             case "DESK" -> {
                 System.out.print("Type (HOT / FIXED): ");
-                Desk.DeskType dt = Desk.DeskType.valueOf(scanner.nextLine().trim().toUpperCase());
-                resRepo.add(new Desk(name, dt, rate));
+                DeskType deskType = DeskType.valueOf(scanner.nextLine().trim().toUpperCase());
+                resourceRepository.add(new Desk(name, deskType, rate));
             }
             case "DEVICE" -> {
                 System.out.print("Quantity: ");
                 int qty = Integer.parseInt(scanner.nextLine().trim());
-                resRepo.add(new Device(name, qty, rate));
+                resourceRepository.add(new Device(name, qty, rate));
             }
             default -> System.out.println("ERROR: Unknown type.");
         }
@@ -130,40 +132,40 @@ public class App {
     }
 
     private void listUsers() {
-        if (userRepo.findAll().isEmpty()) {
+        if (userRepository.findAll().isEmpty()) {
             System.out.println("No users found.");
         } else {
             System.out.println("All users: ");
-            userRepo.findAll().forEach(System.out::println);
+            userRepository.findAll().forEach(System.out::println);
         }
     }
 
     private void listResources() {
-        if (resRepo.findAll().isEmpty()) {
+        if (resourceRepository.findAll().isEmpty()) {
             System.out.println("No resources found.");
         } else {
             System.out.println("All resources: ");
-            resRepo.findAll().forEach(System.out::println);
+            resourceRepository.findAll().forEach(System.out::println);
         }
     }
 
     private void book() {
         System.out.println("User e-mail: ");
         String email = scanner.nextLine().trim();
-        User user = userRepo.findByEmail(email).orElse(null);
+        User user = userRepository.findByEmail(email).orElse(null);
         if (user == null) {
             System.out.println("ERROR: User not found.");
             return;
         }
         System.out.print("Resource name: ");
         String resName = scanner.nextLine().trim();
-        Resource resource = resRepo.findByName(resName).orElse(null);
+        Resource resource = resourceRepository.findByName(resName).orElse(null);
         if (resource == null) {
             System.out.println("ERROR: Resource not found.");
             return;
         }
         System.out.print("Start (yyyy-MM-dd'T'HH:mm): ");
-        LocalDateTime start = LocalDateTime.parse(scanner.nextLine().trim(), FMT);
+        LocalDateTime start = LocalDateTime.parse(scanner.nextLine().trim(), Format);
 
         System.out.print("End time or duration? (TIME / MINUTES): ");
         String type = scanner.nextLine().trim().toUpperCase();
@@ -174,7 +176,7 @@ public class App {
             end = start.plusMinutes(minutes);
         } else {
             System.out.print("End (yyyy-MM-dd'T'HH:mm): ");
-            end = LocalDateTime.parse(scanner.nextLine().trim(), FMT);
+            end = LocalDateTime.parse(scanner.nextLine().trim(), Format);
         }
 
         Booking b = bookingService.book(user, resource, start, end);
@@ -196,11 +198,11 @@ public class App {
     }
 
     private void listBookings() {
-        if (bookRepo.findAll().isEmpty()) {
+        if (bookingRepository.findAll().isEmpty()) {
             System.out.println("No booking found.");
         } else {
             System.out.println("All bookings: ");
-            bookRepo.findAll().forEach(b -> System.out.println(b.getId() + " status: " + b.getStatus() +
+            bookingRepository.findAll().forEach(b -> System.out.println(b.getId() + " status: " + b.getStatus() +
                     " resource: " + b.getResource().getName() + " from: " + b.getStart() + " to: " + b.getEnd()));
         }
     }

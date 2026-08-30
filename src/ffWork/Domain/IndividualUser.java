@@ -3,10 +3,6 @@ package ffWork.Domain;
 public class IndividualUser extends User {
     private final int studentId;
 
-    public int getStudentId() {
-        return studentId;
-    }
-
     public IndividualUser(String email, String displayName, int studentId) {
         super(email, displayName);
         this.studentId = studentId;
@@ -14,6 +10,10 @@ public class IndividualUser extends User {
 
     public IndividualUser(String email, String displayName) {
         this(email, displayName, 0);
+    }
+
+    public int getStudentId() {
+        return studentId;
     }
 
     @Override
