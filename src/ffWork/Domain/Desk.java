@@ -1,0 +1,32 @@
+package ffWork.Domain;
+
+import ffWork.Money.Money;
+import java.math.BigDecimal;
+
+public class Desk extends Resource {
+    private final DeskType type;
+
+    public Desk(String name, Money customHourlyRate, DeskType type) {
+        super(name, customHourlyRate);
+        this.type = type;
+    }
+
+    public Desk(String name, DeskType type, double hourlyRate) {
+        super(name, new Money(BigDecimal.valueOf(hourlyRate)));
+        this.type = type;
+    }
+
+    public DeskType getType() {
+        return type;
+    }
+
+    @Override
+    protected Money baseRatePerHour() {
+        return new Money(BigDecimal.valueOf(40));
+    }
+
+    @Override
+    public String describe() {
+        return "Room " + getName() + ", Desk type: " + getType();
+    }
+}
