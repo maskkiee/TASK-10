@@ -7,7 +7,6 @@ import ffWork.Services.BookingService;
 import java.time.LocalDateTime;
 import static ffWork.Tests.TestsUtils.*;
 
-
 public class TestsExercisesContinued {
     static void main() {
         System.out.println("=====Tests Exercises 3-4=====");

@@ -2,7 +2,6 @@ package ffWork.Domain;
 
 import ffWork.Money.Money;
 import ffWork.Payment.Payment;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 

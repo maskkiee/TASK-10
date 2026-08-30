@@ -7,12 +7,9 @@ import ffWork.Repo.InMemoryResourceRepository;
 import ffWork.Repo.InMemoryUserRepository;
 
 public final class TestsUtils {
-    private TestsUtils() {}
-
     static InMemoryUserRepository userRepository;
     static InMemoryResourceRepository resourceRepository;
     static InMemoryBookingRepository bookingRepository;
-
     static Room alfa;
     static Desk hot;
     static Device projector;

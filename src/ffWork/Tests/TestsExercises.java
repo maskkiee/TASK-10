@@ -8,7 +8,6 @@ import ffWork.Pricing.StandardPricing;
 import ffWork.Services.BillingService;
 import ffWork.Services.BookingService;
 import ffWork.Services.PaymentService;
-
 import java.time.LocalDateTime;
 
 import static ffWork.Tests.TestsUtils.*;
